@@ -18,7 +18,5 @@ In terms of technologies used, the project was integrated with Smarty, a PHP Tem
 
 In order to login to the website you can use this credentials: 
 
-#### E-mail:   setec@gmail.com 
-
-#### Password: setecgroup
+#### E-mail: setec@gmail.com | Password: setecgroup
 
