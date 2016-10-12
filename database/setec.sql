@@ -1,0 +1,276 @@
+CREATE TABLE farm (
+  fid INTEGER PRIMARY KEY,
+  name TEXT
+);
+
+CREATE TABLE pandlet (
+  pid INTEGER PRIMARY KEY,
+  farm INTEGER REFERENCES farm(fid) NOT NULL,
+  name TEXT NOT NULL,
+  lat REAL NOT NULL,
+  lng REAL NOT NULL,
+  mac TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE person (
+  uid INTEGER PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+ /* password TEXT NOT NULL,*/
+  farm INTEGER REFERENCES farm(fid)
+);
+
+CREATE TABLE AuthorizedUser (
+  email TEXT REFERENCES person (email) PRIMARY KEY,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE temperature (
+  tid INTEGER PRIMARY KEY,
+  farm INTEGER REFERENCES farm(fid) NOT NULL,
+  pan INTEGER REFERENCES pandlet(pid) NOT NULL,
+  value REAL NOT NULL,
+  dates TEXT NOT NULL,
+  times TEXT NOT NULL
+);
+
+CREATE TABLE temperaturesoil (
+  tsid INTEGER PRIMARY KEY,
+  farm INTEGER REFERENCES farm(fid) NOT NULL,
+  pan INTEGER REFERENCES pandlet(pid) NOT NULL,
+  value REAL NOT NULL,
+  dates TEXT NOT NULL,
+  times TEXT NOT NULL
+);
+
+CREATE TABLE moisture (
+  mid INTEGER PRIMARY KEY,
+  farm INTEGER REFERENCES farm(fid) NOT NULL,
+  pan INTEGER REFERENCES pandlet(pid) NOT NULL,
+  value REAL NOT NULL,
+  dates TEXT NOT NULL,
+  times TEXT NOT NULL
+);
+
+CREATE TABLE moisturesoil (
+  msid INTEGER PRIMARY KEY,
+  farm INTEGER REFERENCES farm(fid) NOT NULL,
+  pan INTEGER REFERENCES pandlet(pid) NOT NULL,
+  value REAL NOT NULL,
+  dates TEXT NOT NULL,
+  times TEXT NOT NULL
+);
+
+
+CREATE TABLE light (
+  lid INTEGER PRIMARY KEY,
+  farm INTEGER REFERENCES farm(fid) NOT NULL,
+  pan INTEGER REFERENCES pandlet(pid) NOT NULL,
+  value REAL NOT NULL,
+  dates TEXT NOT NULL,
+  times TEXT NOT NULL
+);
+
+INSERT INTO farm VALUES (NULL, 'Quinta das Celebridades');
+
+INSERT INTO pandlet VALUES (1, 1, 'Pandlet1', 41.1750, -8.6200, '0D:14:56:B7:58:DB');
+INSERT INTO pandlet VALUES (2, 1, 'Pandlet2', 41.1670, -8.5990, '9F:1D:0E:31:8E:8F');
+INSERT INTO pandlet VALUES (3, 1, 'Pandlet3', 41.1580, -8.6090, 'AA:BB:CC:DD:EE:F4');
+INSERT INTO pandlet VALUES (4, 2, 'Pandlet4', 41.1780, -8.6100, 'EA:20:7A:5D:3C:25');
+
+INSERT INTO person VALUES (1, 'setec@gmail.com', 'Ricardo', 1);
+
+INSERT INTO AuthorizedUser VALUES ('setec@gmail.com', '489a048ad81430c29de317fbbb0c6a91');
+
+
+INSERT INTO temperature VALUES (NULL, 1, 1, 30, '2016-02-02', '18:45');
+INSERT INTO temperature VALUES (NULL, 1, 1, 50, '2016-01-29', '13:45');
+INSERT INTO temperature VALUES (NULL, 1, 1, 45, '2016-01-22', '13:45');
+INSERT INTO temperature VALUES (NULL, 1, 1, 5, '2016-01-10', '10:50');
+INSERT INTO temperature VALUES (NULL, 1, 1, 25, '2015-12-24', '15:50');
+INSERT INTO temperature VALUES (NULL, 1, 1, 23, '2015-12-10', '19:00');
+INSERT INTO temperature VALUES (NULL, 1, 1, 17, '2015-11-24', '23:00');
+INSERT INTO temperature VALUES (NULL, 1, 1, -20, '2015-11-11', '05:00');
+
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 20, '2016-02-02', '18:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 44, '2016-01-29', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 33, '2016-01-22', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 13, '2016-01-10', '10:50');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 25, '2015-12-24', '15:50');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 40, '2015-12-10', '19:00');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, 32, '2015-11-24', '23:00');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 1, -8, '2015-11-11', '05:00');
+
+INSERT INTO moisture VALUES (NULL, 1, 1, 46, '2016-02-02', '18:45');
+INSERT INTO moisture VALUES (NULL, 1, 1, 47, '2016-01-29', '13:45');
+INSERT INTO moisture VALUES (NULL, 1, 1, 52, '2016-01-22', '13:45');
+INSERT INTO moisture VALUES (NULL, 1, 1, 52, '2016-01-10', '10:50');
+INSERT INTO moisture VALUES (NULL, 1, 1, 60, '2015-12-24', '15:50');
+INSERT INTO moisture VALUES (NULL, 1, 1, 35, '2015-12-10', '19:00');
+INSERT INTO moisture VALUES (NULL, 1, 1, 80, '2015-11-24', '23:00');
+INSERT INTO moisture VALUES (NULL, 1, 1, 71, '2015-11-11', '05:00');
+
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 90, '2016-02-02', '18:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 47, '2016-01-29', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 50, '2016-01-22', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 56, '2016-01-10', '10:50');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 60, '2015-12-24', '15:50');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 72, '2015-12-10', '19:00');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 50, '2015-11-24', '23:00');
+INSERT INTO moisturesoil VALUES (NULL, 1, 1, 35, '2015-11-11', '05:00');
+
+INSERT INTO light VALUES (NULL, 1, 1, 300, '2016-02-02', '18:45');
+INSERT INTO light VALUES (NULL, 1, 1, 250, '2016-01-29', '13:45');
+INSERT INTO light VALUES (NULL, 1, 1, 240, '2016-01-22', '13:45');
+INSERT INTO light VALUES (NULL, 1, 1, 210, '2016-01-10', '10:50');
+INSERT INTO light VALUES (NULL, 1, 1, 220, '2015-12-24', '19:00');
+INSERT INTO light VALUES (NULL, 1, 1, 240, '2015-12-10', '19:00');
+INSERT INTO light VALUES (NULL, 1, 1, 230, '2015-11-24', '23:00');
+INSERT INTO light VALUES (NULL, 1, 1, 200, '2015-11-11', '05:00');
+
+
+
+
+
+
+INSERT INTO temperature VALUES (NULL, 2, 4, 30, '2016-02-02', '18:45');
+INSERT INTO temperature VALUES (NULL, 2, 4, 50, '2016-01-29', '13:45');
+INSERT INTO temperature VALUES (NULL, 2, 4, 45, '2016-01-22', '13:45');
+INSERT INTO temperature VALUES (NULL, 2, 4, 5, '2016-01-10', '10:50');
+INSERT INTO temperature VALUES (NULL, 2, 4, 25, '2015-12-24', '15:50');
+INSERT INTO temperature VALUES (NULL, 2, 4, 23, '2015-12-10', '19:00');
+INSERT INTO temperature VALUES (NULL, 2, 4, 17, '2015-11-24', '23:00');
+INSERT INTO temperature VALUES (NULL, 2, 4, -20, '2015-11-11', '05:00');
+
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 20, '2016-02-02', '18:45');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 44, '2016-01-29', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 33, '2016-01-22', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 13, '2016-01-10', '10:50');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 25, '2015-12-24', '15:50');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 40, '2015-12-10', '19:00');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, 32, '2015-11-24', '23:00');
+INSERT INTO temperaturesoil VALUES (NULL, 2, 4, -8, '2015-11-11', '05:00');
+
+INSERT INTO moisture VALUES (NULL, 2, 4, 46, '2016-02-02', '18:45');
+INSERT INTO moisture VALUES (NULL, 2, 4, 47, '2016-01-29', '13:45');
+INSERT INTO moisture VALUES (NULL, 2, 4, 52, '2016-01-22', '13:45');
+INSERT INTO moisture VALUES (NULL, 2, 4, 52, '2016-01-10', '10:50');
+INSERT INTO moisture VALUES (NULL, 2, 4, 60, '2015-12-24', '15:50');
+INSERT INTO moisture VALUES (NULL, 2, 4, 35, '2015-12-10', '19:00');
+INSERT INTO moisture VALUES (NULL, 2, 4, 80, '2015-11-24', '23:00');
+INSERT INTO moisture VALUES (NULL, 2, 4, 71, '2015-11-11', '05:00');
+
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 90, '2016-02-02', '18:45');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 47, '2016-01-29', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 50, '2016-01-22', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 56, '2016-01-10', '10:50');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 60, '2015-12-24', '15:50');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 72, '2015-12-10', '19:00');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 50, '2015-11-24', '23:00');
+INSERT INTO moisturesoil VALUES (NULL, 2, 4, 35, '2015-11-11', '05:00');
+
+INSERT INTO light VALUES (NULL, 2, 4, 300, '2016-02-02', '18:45');
+INSERT INTO light VALUES (NULL, 2, 4, 250, '2016-01-29', '13:45');
+INSERT INTO light VALUES (NULL, 2, 4, 240, '2016-01-22', '13:45');
+INSERT INTO light VALUES (NULL, 2, 4, 210, '2016-01-10', '10:50');
+INSERT INTO light VALUES (NULL, 2, 4, 220, '2015-12-24', '19:00');
+INSERT INTO light VALUES (NULL, 2, 4, 240, '2015-12-10', '19:00');
+INSERT INTO light VALUES (NULL, 2, 4, 230, '2015-11-24', '23:00');
+INSERT INTO light VALUES (NULL, 2, 4, 200, '2015-11-11', '05:00');
+
+
+
+
+
+INSERT INTO temperature VALUES (NULL, 1, 3, 30, '2016-02-02', '18:45');
+INSERT INTO temperature VALUES (NULL, 1, 3, 50, '2016-01-29', '13:45');
+INSERT INTO temperature VALUES (NULL, 1, 3, 45, '2016-01-22', '13:45');
+INSERT INTO temperature VALUES (NULL, 1, 3, 5, '2016-01-10', '10:50');
+INSERT INTO temperature VALUES (NULL, 1, 3, 25, '2015-12-24', '15:50');
+INSERT INTO temperature VALUES (NULL, 1, 3, 23, '2015-12-10', '19:00');
+INSERT INTO temperature VALUES (NULL, 1, 3, 17, '2015-11-24', '23:00');
+INSERT INTO temperature VALUES (NULL, 1, 3, -20, '2015-11-11', '05:00');
+
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 20, '2016-02-02', '18:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 44, '2016-01-29', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 33, '2016-01-22', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 13, '2016-01-10', '10:50');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 25, '2015-12-24', '15:50');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 40, '2015-12-10', '19:00');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, 32, '2015-11-24', '23:00');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 3, -8, '2015-11-11', '05:00');
+
+INSERT INTO moisture VALUES (NULL, 1, 3, 46, '2016-02-02', '18:45');
+INSERT INTO moisture VALUES (NULL, 1, 3, 47, '2016-01-29', '13:45');
+INSERT INTO moisture VALUES (NULL, 1, 3, 52, '2016-01-22', '13:45');
+INSERT INTO moisture VALUES (NULL, 1, 3, 52, '2016-01-10', '10:50');
+INSERT INTO moisture VALUES (NULL, 1, 3, 60, '2015-12-24', '15:50');
+INSERT INTO moisture VALUES (NULL, 1, 3, 35, '2015-12-10', '19:00');
+INSERT INTO moisture VALUES (NULL, 1, 3, 80, '2015-11-24', '23:00');
+INSERT INTO moisture VALUES (NULL, 1, 3, 71, '2015-11-11', '05:00');
+
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 90, '2016-02-02', '18:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 47, '2016-01-29', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 50, '2016-01-22', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 56, '2016-01-10', '10:50');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 60, '2015-12-24', '15:50');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 72, '2015-12-10', '19:00');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 50, '2015-11-24', '23:00');
+INSERT INTO moisturesoil VALUES (NULL, 1, 3, 35, '2015-11-11', '05:00');
+
+INSERT INTO light VALUES (NULL, 1, 3, 300, '2016-02-02', '18:45');
+INSERT INTO light VALUES (NULL, 1, 3, 250, '2016-01-29', '13:45');
+INSERT INTO light VALUES (NULL, 1, 3, 240, '2016-01-22', '13:45');
+INSERT INTO light VALUES (NULL, 1, 3, 210, '2016-01-10', '10:50');
+INSERT INTO light VALUES (NULL, 1, 3, 220, '2015-12-24', '19:00');
+INSERT INTO light VALUES (NULL, 1, 3, 240, '2015-12-10', '19:00');
+INSERT INTO light VALUES (NULL, 1, 3, 230, '2015-11-24', '23:00');
+INSERT INTO light VALUES (NULL, 1, 3, 200, '2015-11-11', '05:00');
+
+
+
+
+INSERT INTO temperature VALUES (NULL, 1, 2, 30, '2016-02-02', '18:45');
+INSERT INTO temperature VALUES (NULL, 1, 2, 50, '2016-01-29', '13:45');
+INSERT INTO temperature VALUES (NULL, 1, 2, 45, '2016-01-22', '13:45');
+INSERT INTO temperature VALUES (NULL, 1, 2, 5, '2016-01-10', '10:50');
+INSERT INTO temperature VALUES (NULL, 1, 2, 25, '2015-12-24', '15:50');
+INSERT INTO temperature VALUES (NULL, 1, 2, 23, '2015-12-10', '19:00');
+INSERT INTO temperature VALUES (NULL, 1, 2, 17, '2015-11-24', '23:00');
+INSERT INTO temperature VALUES (NULL, 1, 2, -20, '2015-11-11', '05:00');
+
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 20, '2016-02-02', '18:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 44, '2016-01-29', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 33, '2016-01-22', '13:45');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 13, '2016-01-10', '10:50');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 25, '2015-12-24', '15:50');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 40, '2015-12-10', '19:00');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, 32, '2015-11-24', '23:00');
+INSERT INTO temperaturesoil VALUES (NULL, 1, 2, -8, '2015-11-11', '05:00');
+
+INSERT INTO moisture VALUES (NULL, 1, 2, 46, '2016-02-02', '18:45');
+INSERT INTO moisture VALUES (NULL, 1, 2, 47, '2016-01-29', '13:45');
+INSERT INTO moisture VALUES (NULL, 1, 2, 52, '2016-01-22', '13:45');
+INSERT INTO moisture VALUES (NULL, 1, 2, 52, '2016-01-10', '10:50');
+INSERT INTO moisture VALUES (NULL, 1, 2, 60, '2015-12-24', '15:50');
+INSERT INTO moisture VALUES (NULL, 1, 2, 35, '2015-12-10', '19:00');
+INSERT INTO moisture VALUES (NULL, 1, 2, 80, '2015-11-24', '23:00');
+INSERT INTO moisture VALUES (NULL, 1, 2, 71, '2015-11-11', '05:00');
+
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 90, '2016-02-02', '18:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 47, '2016-01-29', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 50, '2016-01-22', '13:45');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 56, '2016-01-10', '10:50');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 60, '2015-12-24', '15:50');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 72, '2015-12-10', '19:00');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 50, '2015-11-24', '23:00');
+INSERT INTO moisturesoil VALUES (NULL, 1, 2, 35, '2015-11-11', '05:00');
+
+INSERT INTO light VALUES (NULL, 1, 2, 300, '2016-02-02', '18:45');
+INSERT INTO light VALUES (NULL, 1, 2, 250, '2016-01-29', '13:45');
+INSERT INTO light VALUES (NULL, 1, 2, 240, '2016-01-22', '13:45');
+INSERT INTO light VALUES (NULL, 1, 2, 210, '2016-01-10', '10:50');
+INSERT INTO light VALUES (NULL, 1, 2, 220, '2015-12-24', '19:00');
+INSERT INTO light VALUES (NULL, 1, 2, 240, '2015-12-10', '19:00');
+INSERT INTO light VALUES (NULL, 1, 2, 230, '2015-11-24', '23:00');
+INSERT INTO light VALUES (NULL, 1, 2, 200, '2015-11-11', '05:00');
